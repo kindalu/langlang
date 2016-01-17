@@ -6,7 +6,8 @@
     "dev": "webpack-dev-server --config webpack-dev-server.config.js --progress --inline --colors --watch",
     "deploy": "NODE_ENV=production webpack -p --config webpack-production.config.js --progress --inline --colors"
   },
-  "private": true,
+  "author": "Wangchou Lu",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.2.1",
     "babel-eslint": "^4.1.6",

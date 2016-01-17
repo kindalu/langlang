@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import ReactDom from 'react-dom';
 import { Router, Route, Link, IndexRoute } from 'react-router';
-import MapPage from './mapPage';
+import 地圖頁 from './mapPage';
 
 class App extends Component {
   constructor(props, context){
@@ -25,7 +25,7 @@ class App extends Component {
   ReactDom.render((
     <Router>
       <Route path='/' component={App}>
-        <IndexRoute component={MapPage} />
+        <IndexRoute component={地圖頁} />
       </Route>
     </Router>
   ), document.getElementById('app'));

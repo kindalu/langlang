@@ -7,7 +7,7 @@
     "deploy": "NODE_ENV=production webpack -p --config webpack-production.config.js --progress --inline --colors"
   },
   "author": "Wangchou Lu",
-  "license": "MIT",
+  "license": "Creative Commons Attribution 3.0",
   "devDependencies": {
     "babel-core": "^6.2.1",
     "babel-eslint": "^4.1.6",

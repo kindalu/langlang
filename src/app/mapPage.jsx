@@ -10,13 +10,14 @@ class 地圖頁 extends Component {
   state = {records:[]};
 
   印資料(record){
-    console.log('user_id:' + record.caption.from.id);
+    console.log('username:' + record.user.username);
     console.log('profile_pic_url:' + record.caption.from.profile_picture);
     console.log('caption:'+ record.caption.text);
     let date = new Date(parseInt(record.created_time));
     console.log('time:'+date );
     console.log('pic_url:'+record.images.thumbnail.url);
     console.log('link:'+record.link);
+    console.log('lat/long:'+record.location.lat+'/'+record.location.lng);
   }
 
   constructor(props, context){
@@ -26,14 +27,44 @@ class 地圖頁 extends Component {
 
     co(function *(){ 
       let 浪浪_資料網址 = "https://api.instagram.com/v1/tags/浪浪/media/recent?access_token=" + 存取碼;
-      let 台大附近地點_資料網址 = 'https://api.instagram.com/v1/locations/search?count=100&distance=500&lat=25.0173405&lng=121.5375631&access_token='+存取碼;
+      let 台大附近地點1_資料網址 = 'https://api.instagram.com/v1/locations/search?distance=300&lat=25.0173405&lng=121.5375631&access_token='+存取碼;
 
       let 抓資料 = thunkify(jsonp);
-      let 浪浪 = yield 抓資料(浪浪_資料網址);
-      let 台大附近點位 = yield 抓資料(台大附近地點_資料網址);
-      console.log(浪浪.data[0]);
-      浪浪.data.forEach(這.印資料);
-      這.state.records = 浪浪.data;
+      let 浪浪們;
+      let 浪浪陣列 = [];
+
+
+      for(let i = 0; i < 2; i++){
+        浪浪們 = yield 抓資料(浪浪_資料網址);
+        浪浪們.data.forEach((浪浪) => {
+          浪浪陣列.push(浪浪);
+        });
+
+        浪浪_資料網址 = 浪浪們.pagination.next_url;
+      }
+
+      let 台大點=[
+        [25.0173405, 121.5375631],
+        [25.0193405, 121.5395631],
+        [25.0153405, 121.5355631],
+        [25.0153405, 121.5395631],
+        [25.0193405, 121.5355631],
+      ];
+      let 點位陣列 = [];
+      let langIdx = 0;
+      for(let locIdx = 0; locIdx<2; locIdx++){
+        let 台大附近地點_資料網址 = 'https://api.instagram.com/v1/locations/search?count=20&distance=300&lat='+台大點[locIdx][0]+'&lng='+台大點[locIdx][1]+'&access_token='+存取碼;
+        let 點位們 = yield 抓資料(台大附近地點_資料網址);
+        點位們.data.forEach((obj) => {
+          浪浪陣列[langIdx].location = {};
+          浪浪陣列[langIdx].location.lat = obj.latitude;
+          浪浪陣列[langIdx].location.lng = obj.longitude;
+          langIdx++;
+        });
+      };
+      這.state.records = 浪浪陣列;
+      console.log(浪浪陣列);
+      浪浪陣列.forEach(這.印資料);
     }).then(() => {
       console.log('抓資料順利');
       這.forceUpdate();

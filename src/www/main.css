@@ -1,0 +1,19 @@
+html {
+  font-family: 'Roboto', sans-serif;
+  background-color: rgba(0,0,0,0.03);
+  text-align:center;
+  font-size:1.5vw;
+}
+
+a {text-decoration:none}
+
+body, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}

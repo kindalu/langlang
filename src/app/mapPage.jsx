@@ -4,6 +4,9 @@ import co from 'co';
 import request from 'superagent';
 import thunkify from 'thunkify';
 import jsonp from 'jsonp';
+import 標頭列 from './headerBar';
+import {default as SimpleMap} from "./SimpleMap";
+
 
 class 地圖頁 extends Component {
 
@@ -26,22 +29,11 @@ class 地圖頁 extends Component {
     let 存取碼 = "23865487.1677ed0.b276f1711845460494e4c908b5737cb5";
 
     co(function *(){ 
-      let 浪浪_資料網址 = "https://api.instagram.com/v1/tags/浪浪/media/recent?access_token=" + 存取碼;
-      let 台大附近地點1_資料網址 = 'https://api.instagram.com/v1/locations/search?distance=300&lat=25.0173405&lng=121.5375631&access_token='+存取碼;
 
       let 抓資料 = thunkify(jsonp);
-      let 浪浪們;
       let 浪浪陣列 = [];
 
-
-      for(let i = 0; i < 2; i++){
-        浪浪們 = yield 抓資料(浪浪_資料網址);
-        浪浪們.data.forEach((浪浪) => {
-          浪浪陣列.push(浪浪);
-        });
-
-        浪浪_資料網址 = 浪浪們.pagination.next_url;
-      }
+      let 浪浪_資料網址 = "https://api.instagram.com/v1/tags/浪浪/media/recent?access_token=" + 存取碼;
 
       let 台大點=[
         [25.0173405, 121.5375631],
@@ -52,8 +44,15 @@ class 地圖頁 extends Component {
       ];
       let 點位陣列 = [];
       let langIdx = 0;
-      for(let locIdx = 0; locIdx<2; locIdx++){
-        let 台大附近地點_資料網址 = 'https://api.instagram.com/v1/locations/search?count=20&distance=300&lat='+台大點[locIdx][0]+'&lng='+台大點[locIdx][1]+'&access_token='+存取碼;
+      for(let idx = 0; idx<2; idx++){
+        
+        let 浪浪們 = yield 抓資料(浪浪_資料網址);
+        浪浪們.data.forEach((浪浪) => {
+          浪浪陣列.push(浪浪);
+        });
+        浪浪_資料網址 = 浪浪們.pagination.next_url;
+
+        let 台大附近地點_資料網址 = 'https://api.instagram.com/v1/locations/search?count=20&distance=300&lat='+台大點[idx][0]+'&lng='+台大點[idx][1]+'&access_token='+存取碼;
         let 點位們 = yield 抓資料(台大附近地點_資料網址);
         點位們.data.forEach((obj) => {
           浪浪陣列[langIdx].location = {};
@@ -61,13 +60,14 @@ class 地圖頁 extends Component {
           浪浪陣列[langIdx].location.lng = obj.longitude;
           langIdx++;
         });
+        這.setState({records:浪浪陣列});
       };
-      這.state.records = 浪浪陣列;
+      //這.state.records = 浪浪陣列;
       console.log(浪浪陣列);
       浪浪陣列.forEach(這.印資料);
     }).then(() => {
       console.log('抓資料順利');
-      這.forceUpdate();
+      //這.forceUpdate();
     }).catch((錯誤) => {
       console.log('抓資料失敗：' + 錯誤);
     });
@@ -77,12 +77,25 @@ class 地圖頁 extends Component {
     
     return (
       <div>
-      {
-        this.state.records.map( (紀錄) => {
-          let 小圖網址 = 紀錄.images.thumbnail.url;
-          return <img src={小圖網址} />;
-        })
-      }
+        <標頭列/>
+        <div className='pure-g'>
+          <div className='pure-u-1' style={{backgroundColor:'#eff'}}>
+            <div style={{height:'2em'}}>
+              <p>abcdeffffff</p>
+            </div>
+          </div>
+          <div className='pure-u-1-4' style={{height:'70%'}}>
+            {
+              this.state.records.map( (紀錄) => {
+                let 小圖網址 = 紀錄.images.thumbnail.url;
+                return <img src={小圖網址} style={{border:'2px solid black'}}/>;
+              })
+            }
+          </div>
+          <div className='pure-u-3-4' style={{backgroundColor:'lightGray'}}>
+            <SimpleMap/>
+          </div>
+        </div>
       </div>
     );
   }

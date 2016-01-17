@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import ReactDom from 'react-dom';
 import { Router, Route, Link, IndexRoute } from 'react-router';
 import 地圖頁 from './mapPage';
+import 標頭列 from './headerBar';
 
 class App extends Component {
   constructor(props, context){
@@ -11,6 +12,7 @@ class App extends Component {
   render(){
     return (
       <div>
+        <標頭列/>
         {this.props.children}
       </div>
     );

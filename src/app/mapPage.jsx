@@ -5,6 +5,7 @@ import request from 'superagent';
 import thunkify from 'thunkify';
 import jsonp from 'jsonp';
 import HeaderBar from './headerBar';
+import LangBox from './langBox.jsx';
 import {default as SimpleMap} from "./SimpleMap";
 
 
@@ -84,19 +85,14 @@ class MapPage extends Component {
               <p> (施工中) 之後會放搜尋列</p>
             </div>
           </div>
-          <div className='pure-u-1-4' style={{height:'70%'}}>
+          <div className='pure-u-1-5' style={{height:'1000px',wordWrap: 'break-word'}}>
             {
               this.state.records.map( (record) => {
-                let thumbnail_url = record.images.thumbnail.url;
-                return (
-                  <a href={record.link} target="_blank">
-                    <img src={thumbnail_url} style={{borderTop:'2px solid black',borderRight:'2px solid black',borderBottom:'2px solid black'}}/>;
-                  </a>
-                );
+                return <LangBox record={record}/>;
               })
             }
           </div>
-          <SimpleMap className='pure-u-3-4' records={this.state.records}/>
+          <SimpleMap className='pure-u-4-5' records={this.state.records}/>
         </div>
       </div>
     );

@@ -44,7 +44,7 @@ class MapPage extends Component {
       ];
       let locArray = [];
       let langIdx = 0;
-      for(let idx = 0; idx<2; idx++){
+      for(let idx = 0; idx<5; idx++){
         
         let langs = yield getData(lang_data_url);
         langs.data.forEach((lang) => {
@@ -67,7 +67,7 @@ class MapPage extends Component {
       langArray.forEach(_this.printRecord);
     }).then(() => {
       console.log('getData順利');
-      //_this.forceUpdate();
+      _this.forceUpdate();
     }).catch((err) => {
       console.log('getData失敗：' + err);
     });
@@ -81,18 +81,22 @@ class MapPage extends Component {
         <div className='pure-g'>
           <div className='pure-u-1' style={{backgroundColor:'#eff'}}>
             <div style={{height:'2em'}}>
-              <p>abcdeffffff</p>
+              <p> (施工中) 之後會放搜尋列</p>
             </div>
           </div>
           <div className='pure-u-1-4' style={{height:'70%'}}>
             {
               this.state.records.map( (record) => {
                 let thumbnail_url = record.images.thumbnail.url;
-                return <img src={thumbnail_url} style={{border:'2px solid black'}}/>;
+                return (
+                  <a href={record.link} target="_blank">
+                    <img src={thumbnail_url} style={{borderTop:'2px solid black',borderRight:'2px solid black',borderBottom:'2px solid black'}}/>;
+                  </a>
+                );
               })
             }
           </div>
-          <SimpleMap className='pure-u-3-4'/>
+          <SimpleMap className='pure-u-3-4' records={this.state.records}/>
         </div>
       </div>
     );

@@ -4,15 +4,15 @@ import co from 'co';
 import request from 'superagent';
 import thunkify from 'thunkify';
 import jsonp from 'jsonp';
-import 標頭列 from './headerBar';
+import HeaderBar from './headerBar';
 import {default as SimpleMap} from "./SimpleMap";
 
 
-class 地圖頁 extends Component {
+class MapPage extends Component {
 
   state = {records:[]};
 
-  印資料(record){
+  printRecord(record){
     console.log('username:' + record.user.username);
     console.log('profile_pic_url:' + record.caption.from.profile_picture);
     console.log('caption:'+ record.caption.text);
@@ -25,51 +25,51 @@ class 地圖頁 extends Component {
 
   constructor(props, context){
     super(props, context);
-    let 這 = this;
-    let 存取碼 = "23865487.1677ed0.b276f1711845460494e4c908b5737cb5";
+    let _this = this;
+    let token = "23865487.1677ed0.b276f1711845460494e4c908b5737cb5";
 
     co(function *(){ 
 
-      let 抓資料 = thunkify(jsonp);
-      let 浪浪陣列 = [];
+      let getData = thunkify(jsonp);
+      let langArray = [];
 
-      let 浪浪_資料網址 = "https://api.instagram.com/v1/tags/浪浪/media/recent?access_token=" + 存取碼;
+      let lang_data_url = "https://api.instagram.com/v1/tags/浪浪/media/recent?access_token=" + token;
 
-      let 台大點=[
+      let ntuLoc=[
         [25.0173405, 121.5375631],
         [25.0193405, 121.5395631],
         [25.0153405, 121.5355631],
         [25.0153405, 121.5395631],
         [25.0193405, 121.5355631],
       ];
-      let 點位陣列 = [];
+      let locArray = [];
       let langIdx = 0;
       for(let idx = 0; idx<2; idx++){
         
-        let 浪浪們 = yield 抓資料(浪浪_資料網址);
-        浪浪們.data.forEach((浪浪) => {
-          浪浪陣列.push(浪浪);
+        let langs = yield getData(lang_data_url);
+        langs.data.forEach((lang) => {
+          langArray.push(lang);
         });
-        浪浪_資料網址 = 浪浪們.pagination.next_url;
+        lang_data_url = langs.pagination.next_url;
 
-        let 台大附近地點_資料網址 = 'https://api.instagram.com/v1/locations/search?count=20&distance=300&lat='+台大點[idx][0]+'&lng='+台大點[idx][1]+'&access_token='+存取碼;
-        let 點位們 = yield 抓資料(台大附近地點_資料網址);
-        點位們.data.forEach((obj) => {
-          浪浪陣列[langIdx].location = {};
-          浪浪陣列[langIdx].location.lat = obj.latitude;
-          浪浪陣列[langIdx].location.lng = obj.longitude;
+        let ntuLocUrl = 'https://api.instagram.com/v1/locations/search?count=20&distance=300&lat='+ntuLoc[idx][0]+'&lng='+ntuLoc[idx][1]+'&access_token='+token;
+        let locs = yield getData(ntuLocUrl);
+        locs.data.forEach((loc) => {
+          langArray[langIdx].location = {};
+          langArray[langIdx].location.lat = loc.latitude;
+          langArray[langIdx].location.lng = loc.longitude;
           langIdx++;
         });
-        這.setState({records:浪浪陣列});
+        _this.setState({records:langArray});
       };
-      //這.state.records = 浪浪陣列;
-      console.log(浪浪陣列);
-      浪浪陣列.forEach(這.印資料);
+      //_this.state.records = langArray;
+      console.log(langArray);
+      langArray.forEach(_this.printRecord);
     }).then(() => {
-      console.log('抓資料順利');
-      //這.forceUpdate();
-    }).catch((錯誤) => {
-      console.log('抓資料失敗：' + 錯誤);
+      console.log('getData順利');
+      //_this.forceUpdate();
+    }).catch((err) => {
+      console.log('getData失敗：' + err);
     });
   }
 
@@ -77,7 +77,7 @@ class 地圖頁 extends Component {
     
     return (
       <div>
-        <標頭列/>
+        <HeaderBar/>
         <div className='pure-g'>
           <div className='pure-u-1' style={{backgroundColor:'#eff'}}>
             <div style={{height:'2em'}}>
@@ -86,9 +86,9 @@ class 地圖頁 extends Component {
           </div>
           <div className='pure-u-1-4' style={{height:'70%'}}>
             {
-              this.state.records.map( (紀錄) => {
-                let 小圖網址 = 紀錄.images.thumbnail.url;
-                return <img src={小圖網址} style={{border:'2px solid black'}}/>;
+              this.state.records.map( (record) => {
+                let thumbnail_url = record.images.thumbnail.url;
+                return <img src={thumbnail_url} style={{border:'2px solid black'}}/>;
               })
             }
           </div>
@@ -106,4 +106,4 @@ class 地圖頁 extends Component {
 //let userUrl = "https://api.instagram.com/v1/users/268418872/media/recent/?access_token=" + token;
 
 
-export default 地圖頁;
+export default MapPage;

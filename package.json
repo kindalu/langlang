@@ -1,0 +1,48 @@
+{
+  "name": "langlang",
+  "version": "0.0.1",
+  "description": "An project for people who love animals to better help langlangs",
+  "scripts": {
+    "dev": "webpack-dev-server --config webpack-dev-server.config.js --progress --inline --colors --watch",
+    "deploy": "NODE_ENV=production webpack -p --config webpack-production.config.js --progress --inline --colors"
+  },
+  "author": "Wangchou Lu",
+  "license": "CC-BY-3.0",
+  "devDependencies": {
+    "babel-core": "^6.2.1",
+    "babel-eslint": "^4.1.6",
+    "babel-loader": "^6.2.0",
+    "babel-polyfill": "^6.3.14",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "babel-preset-stage-0": "^6.1.18",
+    "babel-runtime": "^6.2.0",
+    "css-loader": "^0.23.0",
+    "eslint": "^1.1.0",
+    "eslint-loader": "^1.0.0",
+    "eslint-plugin-react": "^3.2.2",
+    "extract-text-webpack-plugin": "^0.9.1",
+    "html-webpack-plugin": "^1.6.1",
+    "node-sass": "^3.4.2",
+    "postcss-loader": "^0.8.0",
+    "sass-loader": "^3.1.2",
+    "style-loader": "^0.13.0",
+    "transfer-webpack-plugin": "^0.1.4",
+    "webpack": "^1.11.0",
+    "webpack-dev-server": "^1.10.1"
+  },
+  "dependencies": {
+    "classnames": "^2.2.1",
+    "co": "^4.6.0",
+    "history": "^1.13.1",
+    "jsonp": "^0.2.0",
+    "normalize.css": "^3.0.3",
+    "react": "^0.14.3",
+    "react-addons-css-transition-group": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-google-maps": "^4.7.2",
+    "react-router": "^1.0.0",
+    "superagent": "^1.6.1",
+    "thunkify": "^2.1.2"
+  }
+}

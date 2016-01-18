@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import styles from './styles.scss';
 
-class 標頭列 extends Component {
+class HeaderBar extends Component {
 
   constructor(props, context){
     super(props, context);
@@ -24,4 +24,4 @@ class 標頭列 extends Component {
   }
 }
 
-export default 標頭列;
+export default HeaderBar;

@@ -3,13 +3,11 @@ import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
 
 export default function SimpleMap (props) {
   return (
-    <section style={{height: "1000px",width:"1000px"}}>
       <GoogleMapLoader
         containerElement={
-          <div
+          <div className='pure-u-3-4'
             style={{
-              height: "100%",
-              width: "100%",
+              height: "1000px",
             }}
           />
         }
@@ -22,6 +20,5 @@ export default function SimpleMap (props) {
           </GoogleMap>
         }
       />
-    </section>
   );
 }

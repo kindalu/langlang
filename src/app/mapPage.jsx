@@ -92,9 +92,7 @@ class MapPage extends Component {
               })
             }
           </div>
-          <div className='pure-u-3-4' style={{backgroundColor:'lightGray'}}>
-            <SimpleMap/>
-          </div>
+          <SimpleMap className='pure-u-3-4'/>
         </div>
       </div>
     );

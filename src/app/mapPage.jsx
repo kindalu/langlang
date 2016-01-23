@@ -5,9 +5,9 @@ import request from 'superagent';
 import thunkify from 'thunkify';
 import jsonp from 'jsonp';
 import HeaderBar from './headerBar';
-import LangBox from './langBox.jsx';
-import {default as SimpleMap} from "./SimpleMap";
-
+import LangBox from './langBox';
+import LangMap from './langMap';
+import SearchBar from './searchBar';
 
 class MapPage extends Component {
 
@@ -77,31 +77,24 @@ class MapPage extends Component {
   render(){
     
     return (
-      <div>
-        <HeaderBar/>
-        <div className='pure-g'>
-          <div className='pure-u-1' style={{backgroundColor:'#eff'}}>
-            <div style={{height:'2em'}}>
-              <p> (施工中) 之後會放搜尋列</p>
-            </div>
-          </div>
-          <div className='pure-u-1-5' style={{height:'1000px',wordWrap: 'break-word'}}>
-            {
-              this.state.records.map( (record) => {
-                return <LangBox record={record}/>;
-              })
-            }
-          </div>
-          <SimpleMap className='pure-u-4-5' records={this.state.records}/>
+      <div className={styles.mapPage}>
+        {/* 地圖頁 - 搜尋列 */}
+        <SearchBar/>
+
+        {/* 地圖頁 - 左邊浪浪紀錄列表 */}
+        <div className={styles.langBoxContainer}>
+          {
+            this.state.records.map( (record) => {
+              return <LangBox key={record.images.thumbnail.url} record={record}/>;
+            })
+          }
         </div>
+
+        {/* 地圖頁 - GoogleMap */}
+        <LangMap records={this.state.records}/>
       </div>
     );
   }
 }
-
-//https://api.instagram.com/v1/locations/825607747/media/recent?access_token=23865487.1677ed0.b276f1711845460494e4c908b5737cb5
-//https://api.instagram.com/v1/media/search/?count=100&distance=500&lat=25.027847300000026&lng=121.52693370619042&client_id=f940a50c858c4ebab8d9e8cd3de0f508&callback=jQuery21302612382802180946_1453012336441&_=1453012336444
-//let userUrl = "https://api.instagram.com/v1/users/268418872/media/recent/?access_token=" + token;
-
 
 export default MapPage;

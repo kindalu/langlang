@@ -2,22 +2,19 @@
 import React, { PropTypes, Component } from 'react';
 import {GoogleMapLoader, GoogleMap, Marker} from "react-google-maps";
 import {default as InfoBox} from "react-google-maps/lib/addons/InfoBox";
+import styles from './styles.scss';
+import MapPhotoBox from '../mapPhotoBox';
 
-class SimpleMap extends Component {
+class LangMap extends Component {
 
   render(){
     let records = this.props.records;
     let latlng = {lat: 25.0173405, lng: 121.5375631};
-  
     return (
         <GoogleMapLoader
           
           containerElement={
-            <div className='pure-u-4-5'
-              style={{
-                height: "1000px",
-              }}
-            />
+            <div className={styles.mapContainer} />
           }
           
           googleMapElement={
@@ -35,11 +32,7 @@ class SimpleMap extends Component {
                       key = {record.id}
                       defaultPosition={myLatLng}
                       options={{closeBoxURL: "", enableEventPropagation: true}}>
-                        <a href={record.link} target="_blank">
-                          <div style={{width:'56px', height:'56px', borderRadius:'6px', border: '3px solid #555'}}>
-                            <img ref={record.id} src={record.images.thumbnail.url} style={{height:'50px',width:'50px'}}/>
-                          </div>
-                        </a>
+                        <MapPhotoBox record={record}/>
                     </InfoBox>
                   );    
                 })
@@ -52,4 +45,4 @@ class SimpleMap extends Component {
   }
 }
 
-export default SimpleMap;
+export default LangMap;

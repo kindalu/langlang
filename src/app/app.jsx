@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 import { Router, Route, Link, IndexRoute } from 'react-router';
 import MapPage from './mapPage';
 import HeaderBar from './headerBar';
+import styles from './styles.scss'
 
 class App extends Component {
   constructor(props, context){
@@ -11,9 +12,9 @@ class App extends Component {
 
   render(){
     return (
-      <div>
+      <div className={styles.app}>
         <HeaderBar/>
-        {this.props.children}
+        <MapPage/>
       </div>
     );
   }
@@ -24,12 +25,6 @@ class App extends Component {
   //Needed for React Developer Tools
   window.React = React;
 
-  ReactDom.render((
-    <Router>
-      <Route path='/' component={App}>
-        <IndexRoute component={MapPage} />
-      </Route>
-    </Router>
-  ), document.getElementById('app'));
+  ReactDom.render(<App/>, document.getElementById('app'));
 
 })();

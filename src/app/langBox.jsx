@@ -28,7 +28,7 @@ class LangBox extends Component {
           </div>
           
           <div className={styles.textBox}>
-            文長沒法放... 這是樣本文章。
+            [測試中] 文長沒法放...
           </div>
 
           <div className={styles.tagBox}>

@@ -13,7 +13,7 @@ class SimpleMap extends Component {
         <GoogleMapLoader
           
           containerElement={
-            <div className='pure-u-3-4'
+            <div className='pure-u-4-5'
               style={{
                 height: "1000px",
               }}
